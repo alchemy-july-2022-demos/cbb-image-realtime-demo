@@ -26,3 +26,7 @@ section h2 {
     font-size: 1.1em;
     margin: 10px 0 5px 0;
 }
+
+.post-image {
+    height: 100px;
+}

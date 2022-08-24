@@ -1,4 +1,9 @@
-import { checkAuth, signOutUser, getPost, deletePost } from '../fetch-utils.js';
+import {
+    checkAuth,
+    signOutUser,
+    getPost,
+    deletePost,
+} from '../fetch-utils.js';
 
 const signOutLink = document.getElementById('sign-out-link');
 const currentUser = checkAuth();
@@ -6,8 +11,11 @@ signOutLink.addEventListener('click', signOutUser);
 
 const titleDisplay = document.getElementById('title-display');
 const categoryDisplay = document.getElementById('category-display');
-const descriptionDisplay = document.getElementById('description-display');
+const descriptionDisplay = document.getElementById(
+    'description-display'
+);
 const contactDisplay = document.getElementById('contact-display');
+const imageDisplay = document.getElementById('image-display');
 const deleteButton = document.getElementById('delete-button');
 
 async function displayPost() {
@@ -21,6 +29,11 @@ async function displayPost() {
     categoryDisplay.textContent = `${post.category.emoji} ${post.category.name}`;
     descriptionDisplay.textContent = post.description;
     contactDisplay.textContent = post.contact;
+
+    if (post.image_url) {
+        imageDisplay.src = post.image_url;
+        imageDisplay.classList.remove('hidden');
+    }
 
     if (post.user_id === currentUser.id) {
         deleteButton.classList.remove('hidden');
