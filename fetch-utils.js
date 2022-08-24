@@ -106,25 +106,21 @@ export async function getProfiles() {
     return await client.from('profiles').select();
 }
 
-export async function uploadAvatar(imageName, imageFile) {
+export async function uploadImage(bucketName, imageName, imageFile) {
     // we can use the storage bucket to upload the image,
     // then use it to get the public URL
-    const bucket = client.storage.from('avatars');
+    const bucket = client.storage.from(bucketName);
 
-    const { data, error } = await bucket.upload(
-        imageName,
-        imageFile,
-        {
-            cacheControl: '3600',
-            // in this case, we will _replace_ any
-            // existing file with same name.
-            upsert: true,
-        }
-    );
+    const response = await bucket.upload(imageName, imageFile, {
+        cacheControl: '3600',
+        // in this case, we will _replace_ any
+        // existing file with same name.
+        upsert: true,
+    });
 
-    if (error) {
+    if (response.error) {
         // eslint-disable-next-line no-console
-        console.log(error);
+        console.log(response.error);
         return null;
     }
 
@@ -133,7 +129,7 @@ export async function uploadAvatar(imageName, imageFile) {
 
     // so we will make it ourselves.
     // note that we exported the url from `./client.js`
-    const url = `${SUPABASE_URL}/storage/v1/object/public/${data.Key}`;
+    const url = `${SUPABASE_URL}/storage/v1/object/public/${response.data.Key}`;
 
     return url;
 }

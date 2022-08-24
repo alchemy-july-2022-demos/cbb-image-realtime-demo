@@ -3,7 +3,7 @@ import {
     signOutUser,
     updateProfile,
     getProfile,
-    uploadAvatar,
+    uploadImage,
 } from '../fetch-utils.js';
 
 const signOutLink = document.getElementById('sign-out-link');
@@ -67,9 +67,13 @@ profileForm.addEventListener('submit', async (e) => {
         // image has
         const imageName = `${user.id}/${imageFile.name}`;
         // do the upload and get the returned url
-        const url = await uploadAvatar(imageName, imageFile);
+        const url = await uploadImage(
+            'avatars',
+            imageName,
+            imageFile
+        );
         // add the url property to the update object
-        profileUpdate.url = url;
+        profileUpdate.avatar_url = url;
     }
 
     const response = await updateProfile(profileUpdate);
