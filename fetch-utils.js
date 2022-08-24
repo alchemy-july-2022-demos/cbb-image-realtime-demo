@@ -105,3 +105,35 @@ export async function getProfile(id) {
 export async function getProfiles() {
     return await client.from('profiles').select();
 }
+
+export async function uploadAvatar(imageName, imageFile) {
+    // we can use the storage bucket to upload the image,
+    // then use it to get the public URL
+    const bucket = client.storage.from('avatars');
+
+    const { data, error } = await bucket.upload(
+        imageName,
+        imageFile,
+        {
+            cacheControl: '3600',
+            // in this case, we will _replace_ any
+            // existing file with same name.
+            upsert: true,
+        }
+    );
+
+    if (error) {
+        // eslint-disable-next-line no-console
+        console.log(error);
+        return null;
+    }
+
+    // bug in supabase makes this return wrong value :(
+    // const url = bucket.getPublicUrl(data.Key);
+
+    // so we will make it ourselves.
+    // note that we exported the url from `./client.js`
+    const url = `${SUPABASE_URL}/storage/v1/object/public/${data.Key}`;
+
+    return url;
+}

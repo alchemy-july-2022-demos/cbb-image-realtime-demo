@@ -1,6 +1,11 @@
 // importing other stuff, utility functions for:
 // working with supabase
-import { checkAuth, signOutUser, getPosts } from './fetch-utils.js';
+import {
+    checkAuth,
+    signOutUser,
+    getPosts,
+    getProfile,
+} from './fetch-utils.js';
 // pure rendering (data --> DOM)
 import { renderPosts } from './render-utils.js';
 
@@ -11,7 +16,18 @@ import { renderPosts } from './render-utils.js';
 const signOutLink = document.getElementById('sign-out-link');
 signOutLink.addEventListener('click', signOutUser);
 // make sure we have a user
-checkAuth();
+const user = checkAuth();
+
+async function loadProfile() {
+    const profile = await getProfile(user.id);
+    if (profile && profile.avatar_url) {
+        const userAvatar = document.getElementById('user-avatar');
+        userAvatar.src = profile.avatar_url;
+        userAvatar.classList.remove('hidden');
+    }
+}
+
+loadProfile();
 
 const bulletinBoard = document.getElementById('bulletin-board');
 
