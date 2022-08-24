@@ -66,7 +66,8 @@ export async function getPost(id) {
         .select(
             `
             *,
-            category:categories(*)
+            category:categories(*),
+            comments(*)
         `
         )
         .match({ id })
@@ -80,6 +81,12 @@ export async function createPost(post) {
 
 export async function deletePost(id) {
     return await client.from('posts').delete().match({ id });
+}
+
+/* post comments */
+
+export async function addComment(comment) {
+    return await client.from('comments').insert(comment).single();
 }
 
 /* user profiles */

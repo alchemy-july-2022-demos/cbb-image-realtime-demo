@@ -3,6 +3,7 @@ import {
     signOutUser,
     getPost,
     deletePost,
+    addComment,
 } from '../fetch-utils.js';
 
 const signOutLink = document.getElementById('sign-out-link');
@@ -18,11 +19,13 @@ const contactDisplay = document.getElementById('contact-display');
 const imageDisplay = document.getElementById('image-display');
 const deleteButton = document.getElementById('delete-button');
 
+let post = null;
+
 async function displayPost() {
     const searchParams = new URLSearchParams(location.search);
     const id = searchParams.get('id');
     if (!id) return location.replace('../');
-    const post = await getPost(id);
+    post = await getPost(id);
     if (!post) return location.replace('../');
 
     titleDisplay.textContent = post.title;
@@ -52,3 +55,28 @@ async function displayPost() {
 }
 
 displayPost();
+
+const addCommentForm = document.getElementById('add-comment-form');
+
+addCommentForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(addCommentForm);
+
+    const response = await addComment({
+        text: formData.get('text'),
+        post_id: post.id,
+    });
+
+    if (response.error) {
+        // eslint-disable-next-line no-console
+        console.log(response.error);
+    } else {
+        addCommentForm.reset();
+
+        const comment = response.data;
+        post.comments.push(comment);
+
+        // TODO: re-display comments
+    }
+});

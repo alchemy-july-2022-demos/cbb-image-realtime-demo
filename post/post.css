@@ -1,6 +1,6 @@
 article {
     display: grid;
-    gap: 30px;
+    gap: 10px;
 }
 
 article header {
@@ -29,4 +29,17 @@ section h2 {
 
 .post-image {
     height: 100px;
+}
+
+form {
+    max-width: 800px;
+    display: grid;
+    grid-template-columns: auto 100px;
+    align-items: center;
+}
+
+form button,
+form input {
+    height: 35px;
+    margin: 0;
 }
