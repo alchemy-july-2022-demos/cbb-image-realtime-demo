@@ -1,0 +1,56 @@
+#bulletin-board {
+    height: 100%;
+    background-image: url(../assets/bulletin-bg.jpeg);
+    border: 10px solid black;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    padding: 1em;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: flex-start;
+    gap: 1em;
+}
+
+.post-it {
+    height: 12em;
+    width: 13em;
+    padding: 0.75em;
+    color: #000;
+    background: #ffc;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    transition: box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative;
+}
+
+.post-it a {
+    display: grid;
+    gap: 0.5em;
+    grid-template-rows: auto 1fr auto;
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
+    cursor: pointer;
+}
+
+.post-it:hover {
+    box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+}
+
+.post-it h2 {
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+.post-it p {
+    font-size: 0.9em;
+    overflow-y: auto;
+}
+
+.post-it .category {
+    position: absolute;
+    top: 2px;
+    right: 4px;
+    font-size: 1.5em;
+}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="icon" type="image/x-icon" href="../assets/alchemy-favicon.png" />
+    <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;600&family=Titillium+Web:wght@200;400;600&display=swap">
+    <link rel="stylesheet" href="../styles/reset.css" />
+    <link rel="stylesheet" href="../styles/global.css" />
+    <link rel="stylesheet" href="../styles/bulletin-board.css" />
+    <title>Add Post</title>
+</head>
+
+<body>
+    <header class="page-header">
+        <img class="logo" src="/assets/cbb-logo.png">
+        <p class="title">Create a Post</p>
+        <nav>
+            <a href="../">Bulletin</a>
+            <a href="../users">Users</a>
+            <a href="../profile">My Profile</a>
+            <a id="sign-out-link" href="../auth">Sign out</a>
+        </nav>
+    </header>
+
+    <main>
+        <form id="post-it-form">
+            <label>
+                <div>Category</div>
+                <select id="category-select" name="category_id" required>
+                    <option disabled selected value="">choose a category...</option>
+                </select>
+            </label>
+
+            <label>
+                <div>Title</div>
+                <input name="title" required placeholder="my post is about...">
+            </label>
+
+            <label>
+                <div>Description</div>
+                <textarea name="description" required placeholder="more details..."></textarea>
+            </label>
+
+            <label>
+                <div>Contact</div>
+                <input name="contact" placeholder="how to get in touch..." />
+            </label>
+
+            <button>Add Post</button>
+
+            <p class="error"></p>
+        </form>
+    </main>
+
+    <footer>&copy;2022 Software Developer</footer>
+
+    <script type="module" src="create-post.js"></script>
+</body>
+
+</html>
