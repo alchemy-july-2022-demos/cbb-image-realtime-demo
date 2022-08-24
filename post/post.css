@@ -43,3 +43,10 @@ form input {
     height: 35px;
     margin: 0;
 }
+
+#comments-container ul {
+    padding: 15px 0;
+
+    display: grid;
+    gap: 15px;
+}

@@ -4,7 +4,10 @@ import {
     getPost,
     deletePost,
     addComment,
+    onComment,
+    getComment,
 } from '../fetch-utils.js';
+import { renderComments } from '../render-utils.js';
 
 const signOutLink = document.getElementById('sign-out-link');
 const currentUser = checkAuth();
@@ -52,9 +55,32 @@ async function displayPost() {
             }
         });
     }
+
+    displayComments();
+
+    onComment(post.id, handleNewComment);
+}
+
+async function handleNewComment(payload) {
+    const response = await getComment(payload.new.id);
+    if (response.data) {
+        const comment = response.data;
+        post.comments.push(comment);
+        displayComments();
+    }
 }
 
 displayPost();
+
+const commentsContainer = document.getElementById(
+    'comments-container'
+);
+
+function displayComments() {
+    commentsContainer.innerHTML = '';
+    const ul = renderComments(post.comments);
+    commentsContainer.append(ul);
+}
 
 const addCommentForm = document.getElementById('add-comment-form');
 
@@ -74,9 +100,7 @@ addCommentForm.addEventListener('submit', async (e) => {
     } else {
         addCommentForm.reset();
 
-        const comment = response.data;
-        post.comments.push(comment);
-
-        // TODO: re-display comments
+        // let the realtime subscription update
+        // the comments
     }
 });

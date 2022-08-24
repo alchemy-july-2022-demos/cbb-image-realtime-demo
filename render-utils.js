@@ -67,3 +67,18 @@ export function renderProfiles(profiles, userId) {
 
     return fragment;
 }
+
+export function renderComments(comments) {
+    const ul = document.createElement('ul');
+
+    for (const comment of comments) {
+        const li = document.createElement('li');
+        const name = comment.profile
+            ? comment.profile.user_name
+            : 'anon';
+        li.textContent = name + ' : ' + comment.text;
+        ul.append(li);
+    }
+
+    return ul;
+}

@@ -67,7 +67,10 @@ export async function getPost(id) {
             `
             *,
             category:categories(*),
-            comments(*)
+            comments(
+                *,
+                profile:profiles(*)
+            )
         `
         )
         .match({ id })
@@ -87,6 +90,26 @@ export async function deletePost(id) {
 
 export async function addComment(comment) {
     return await client.from('comments').insert(comment).single();
+}
+
+export async function getComment(id) {
+    return await client
+        .from('comments')
+        .select(
+            `
+        *,
+        profile:profiles(*)
+    `
+        )
+        .match({ id })
+        .single();
+}
+
+export function onComment(postId, handleNewComment) {
+    client
+        .from(`comments:post_id=eq.${postId}`)
+        .on('INSERT', handleNewComment)
+        .subscribe();
 }
 
 /* user profiles */
